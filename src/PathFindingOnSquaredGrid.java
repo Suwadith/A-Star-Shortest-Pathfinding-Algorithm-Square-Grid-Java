@@ -412,6 +412,7 @@ public class PathFindingOnSquaredGrid {
             }
 
             if (additionalPath) {
+
                 //TopLeft Cell
                 try {
                     if (cell[node.x - 1][node.y - 1].hValue != -1
