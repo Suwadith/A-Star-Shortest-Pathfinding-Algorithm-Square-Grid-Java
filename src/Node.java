@@ -9,7 +9,6 @@ public class Node {
     int hValue;
     int gValue;
     int fValue;
-    int fCellValue;
     Node parent;
 
 
