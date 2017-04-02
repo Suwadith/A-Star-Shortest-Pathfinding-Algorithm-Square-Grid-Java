@@ -116,7 +116,7 @@ public class PathFindingOnSquaredGrid {
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
                 a[i][j] = StdRandom.bernoulli(p);
-        return a;//etha da remove panna antha matrix?
+        return a;
     }
 
 
