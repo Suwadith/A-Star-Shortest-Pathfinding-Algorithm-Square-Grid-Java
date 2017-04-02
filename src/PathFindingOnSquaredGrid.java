@@ -85,7 +85,6 @@ public class PathFindingOnSquaredGrid {
     public static void show(boolean[][] a, boolean which) {
         int N = a.length;
         StdDraw.setXscale(-1, N);
-        ;
         StdDraw.setYscale(-1, N);
         StdDraw.setPenColor(StdDraw.BLACK);
         for (int i = 0; i < N; i++)
@@ -99,7 +98,6 @@ public class PathFindingOnSquaredGrid {
     public static void show(boolean[][] a, boolean which, int x1, int y1, int x2, int y2) {
         int N = a.length;
         StdDraw.setXscale(-1, N);
-        ;
         StdDraw.setYscale(-1, N);
         StdDraw.setPenColor(StdDraw.BLACK);
         for (int i = 0; i < N; i++)
@@ -118,7 +116,7 @@ public class PathFindingOnSquaredGrid {
         for (int i = 0; i < N; i++)
             for (int j = 0; j < N; j++)
                 a[i][j] = StdRandom.bernoulli(p);
-        return a;
+        return a;//etha da remove panna antha matrix?
     }
 
 
@@ -167,7 +165,7 @@ public class PathFindingOnSquaredGrid {
         //Generating a new Boolean Matrix according to the input values of n and p (Length, Percolation value)
         boolean[][] randomlyGenMatrix = random(n, p);
 
-        StdArrayIO.print(randomlyGenMatrix);
+//        StdArrayIO.print(randomlyGenMatrix);
         show(randomlyGenMatrix, true);
 
         System.out.println();
@@ -191,12 +189,13 @@ public class PathFindingOnSquaredGrid {
 
         show(randomlyGenMatrix, true, Ai, Aj, Bi, Bj);
 
-        Stopwatch timerFlow = new Stopwatch();
+        Stopwatch timerFlow = null;
 
         //Loop to find all 3 pathways and their relative Final Cost values
         for(int j=0; j<3; j++) {
 
             if (j == 0) {
+                timerFlow = new Stopwatch();
                 //Method to generate Chebyshev path. Both Horizontal and Diagonal pathways are possible.
                 generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, true);
 
@@ -232,7 +231,7 @@ public class PathFindingOnSquaredGrid {
             }
 
             if (j == 1) {
-
+                timerFlow = new Stopwatch();
                 generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 14, true);
 
                 if(pathList.contains(cell[Bi][Bj])){
@@ -263,7 +262,7 @@ public class PathFindingOnSquaredGrid {
             }
 
             if (j == 2) {
-
+                timerFlow = new Stopwatch();
                 generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, false);
 
                 if(pathList.contains(cell[Bi][Bj])){
