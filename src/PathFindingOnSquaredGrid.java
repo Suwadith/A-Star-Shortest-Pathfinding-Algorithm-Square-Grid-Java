@@ -13,74 +13,6 @@ public class PathFindingOnSquaredGrid {
     static ArrayList<Node> closedList = new ArrayList<>();
     static boolean additionalPath = false;
 
-    // given an N-by-N matrix of open cells, return an N-by-N matrix
-    // of cells reachable from the top
-    public static boolean[][] flow(boolean[][] open) {
-        int N = open.length;
-
-        boolean[][] full = new boolean[N][N];
-        for (int j = 0; j < N; j++) {
-            flow(open, full, 0, j);
-        }
-
-        return full;
-    }
-
-    // determine set of open/blocked cells using depth first search
-    public static void flow(boolean[][] open, boolean[][] full, int i, int j) {
-        int N = open.length;
-
-        // base cases
-        if (i < 0 || i >= N) return;    // invalid row
-        if (j < 0 || j >= N) return;    // invalid column
-        if (!open[i][j]) return;        // not an open cell
-        if (full[i][j]) return;         // already marked as open
-
-        full[i][j] = true;
-
-        flow(open, full, i + 1, j);   // down
-        flow(open, full, i, j + 1);   // right
-        flow(open, full, i, j - 1);   // left
-        flow(open, full, i - 1, j);   // up
-    }
-
-    // does the system percolate?
-    public static boolean percolates(boolean[][] open) {
-        int N = open.length;
-
-        boolean[][] full = flow(open);
-        for (int j = 0; j < N; j++) {
-            if (full[N - 1][j]) return true;
-        }
-
-        return false;
-    }
-
-    // does the system percolate vertically in a direct way?
-    public static boolean percolatesDirect(boolean[][] open) {
-        int N = open.length;
-
-        boolean[][] full = flow(open);
-        int directPerc = 0;
-        for (int j = 0; j < N; j++) {
-            if (full[N - 1][j]) {
-                // StdOut.println("Hello");
-                directPerc = 1;
-                int rowabove = N - 2;
-                for (int i = rowabove; i >= 0; i--) {
-                    if (full[i][j]) {
-                        // StdOut.println("i: " + i + " j: " + j + " " + full[i][j]);
-                        directPerc++;
-                    } else break;
-                }
-            }
-        }
-
-        // StdOut.println("Direct Percolation is: " + directPerc);
-        if (directPerc == N) return true;
-        else return false;
-    }
-
     // draw the N-by-N boolean matrix to standard draw
     public static void show(boolean[][] a, boolean which) {
         int N = a.length;
@@ -158,7 +90,7 @@ public class PathFindingOnSquaredGrid {
         Scanner in = new Scanner(System.in);
         System.out.println("Please choose N: ");
         int n = in.nextInt();
-        System.out.println("Please choose Percolation: ");
+        System.out.println("Please choose Obstacle ratio: ");
         double p = in.nextDouble();
         int cost = 0;
 
@@ -167,13 +99,6 @@ public class PathFindingOnSquaredGrid {
 
 //        StdArrayIO.print(randomlyGenMatrix);
         show(randomlyGenMatrix, true);
-
-        System.out.println();
-        System.out.println("The system percolates: " + percolates(randomlyGenMatrix));
-
-        System.out.println();
-        System.out.println("The system percolates directly: " + percolatesDirect(randomlyGenMatrix));
-        System.out.println();
 
         //Creation of a Node type 2D array
         cell = new Node[randomlyGenMatrix.length][randomlyGenMatrix.length];
