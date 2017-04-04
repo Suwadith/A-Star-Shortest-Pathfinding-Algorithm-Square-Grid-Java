@@ -51,7 +51,6 @@ public class PathFindingOnSquaredGrid {
         return a;
     }
 
-
     /**
      *
      * @param matrix The boolean matrix that the framework generates
@@ -63,6 +62,7 @@ public class PathFindingOnSquaredGrid {
      * @param v Cost between 2 cells located horizontally or vertically next to each other
      * @param d Cost between 2 cells located Diagonally next to each other
      * @param additionalPath Boolean to decide whether to calculate the cost of through the diagonal path
+     * @param h int value which decides the correct method to choose to calculate the Heuristic value
      */
     public static void generateHValue(boolean matrix[][], int Ai, int Aj, int Bi, int Bj, int n, int v, int d, boolean additionalPath, int h) {
 
