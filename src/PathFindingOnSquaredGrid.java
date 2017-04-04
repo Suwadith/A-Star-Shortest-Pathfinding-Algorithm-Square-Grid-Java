@@ -64,7 +64,7 @@ public class PathFindingOnSquaredGrid {
      * @param d Cost between 2 cells located Diagonally next to each other
      * @param additionalPath Boolean to decide whether to calculate the cost of through the diagonal path
      */
-    public static void generateMHValue(boolean matrix[][], int Ai, int Aj, int Bi, int Bj, int n, int v, int d, boolean additionalPath) {
+    public static void generateHValue(boolean matrix[][], int Ai, int Aj, int Bi, int Bj, int n, int v, int d, boolean additionalPath, int h) {
 
         for (int y = 0; y < matrix.length; y++) {
             for (int x = 0; x < matrix.length; x++) {
@@ -72,8 +72,18 @@ public class PathFindingOnSquaredGrid {
                 cell[y][x] = new Node(y, x);
                 //Checks whether a cell is Blocked or Not by checking the boolean value
                 if (matrix[y][x]) {
-                    //Assigning the Heuristic value by calculating the absolute length (x+y) from the ending point to the starting point
-                    cell[y][x].hValue = Math.abs(y - Bi) + Math.abs(x - Bj);
+                    if(h==1) {
+                        if(Math.abs(y - Bi)>Math.abs(x - Bj)){
+                            cell[y][x].hValue = Math.abs(y - Bi);
+                        }else{
+                            cell[y][x].hValue = Math.abs(x - Bj);
+                        }
+                    }else if(h==2){
+                        cell[y][x].hValue = Math.sqrt(Math.pow(y-Bi, 2) + Math.pow(x-Bj, 2));
+                    }else if(h==3){
+                        //Assigning the Heuristic value by calculating the absolute length (x+y) from the ending point to the starting point
+                        cell[y][x].hValue = Math.abs(y - Bi) + Math.abs(x - Bj);
+                    }
                 } else {
                     //If the boolean value is false, then assigning -1 instead of the absolute length
                     cell[y][x].hValue = -1;
@@ -82,42 +92,6 @@ public class PathFindingOnSquaredGrid {
         }
         generatePath(cell, Ai, Aj, Bi, Bj, n, v, d, additionalPath);
     }
-
-    public static void generateCHValue(boolean matrix[][], int Ai, int Aj, int Bi, int Bj, int n, int v, int d, boolean additionalPath) {
-        for (int y = 0; y < matrix.length; y++) {
-            for (int x = 0; x < matrix.length; x++) {
-                cell[y][x] = new Node(y, x);
-                if (matrix[y][x]) {
-                    if(Math.abs(y - Bi)>Math.abs(x - Bj)){
-                        cell[y][x].hValue = Math.abs(y - Bi);
-                    }else{
-                        cell[y][x].hValue = Math.abs(x - Bj);
-                    }
-                } else {
-                    cell[y][x].hValue = -1;
-                }
-            }
-        }
-        generatePath(cell, Ai, Aj, Bi, Bj, n, v, d, additionalPath);
-    }
-
-    public static void generateEHValue(boolean matrix[][], int Ai, int Aj, int Bi, int Bj, int n, int v, int d, boolean additionalPath) {
-
-        for (int y = 0; y < matrix.length; y++) {
-            for (int x = 0; x < matrix.length; x++) {
-                cell[y][x] = new Node(y, x);
-                if (matrix[y][x]) {
-                    cell[y][x].hValue = Math.sqrt(Math.pow(y-Bi, 2) + Math.pow(x-Bj, 2));
-                } else {
-                    cell[y][x].hValue = -1;
-                }
-            }
-        }
-        generatePath(cell, Ai, Aj, Bi, Bj, n, v, d, additionalPath);
-    }
-
-
-
 
     public static void menu() {
         Scanner in = new Scanner(System.in);
@@ -155,7 +129,7 @@ public class PathFindingOnSquaredGrid {
             if (j == 0) {
                 timerFlow = new Stopwatch();
                 //Method to generate Chebyshev path. Both Horizontal and Diagonal pathways are possible.
-                generateCHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, true);
+                generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, true, 1);
 
                 //Checks whether the end point has been reach (Stored in the pathList)
                 if(pathList.contains(cell[Bi][Bj])){
@@ -190,7 +164,7 @@ public class PathFindingOnSquaredGrid {
 
             if (j == 1) {
                 timerFlow = new Stopwatch();
-                generateEHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 14, true);
+                generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 14, true, 2);
 
                 if(pathList.contains(cell[Bi][Bj])){
 
@@ -221,7 +195,7 @@ public class PathFindingOnSquaredGrid {
 
             if (j == 2) {
                 timerFlow = new Stopwatch();
-                generateMHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, false);
+                generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, false, 3);
 
                 if(pathList.contains(cell[Bi][Bj])){
 
