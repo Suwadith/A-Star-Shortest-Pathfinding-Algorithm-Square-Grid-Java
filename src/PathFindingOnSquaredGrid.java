@@ -64,7 +64,7 @@ public class PathFindingOnSquaredGrid {
      * @param d Cost between 2 cells located Diagonally next to each other
      * @param additionalPath Boolean to decide whether to calculate the cost of through the diagonal path
      */
-    public static void generateHValue(boolean matrix[][], int Ai, int Aj, int Bi, int Bj, int n, int v, int d, boolean additionalPath) {
+    public static void generateMHValue(boolean matrix[][], int Ai, int Aj, int Bi, int Bj, int n, int v, int d, boolean additionalPath) {
 
         for (int y = 0; y < matrix.length; y++) {
             for (int x = 0; x < matrix.length; x++) {
@@ -80,10 +80,43 @@ public class PathFindingOnSquaredGrid {
                 }
             }
         }
-
         generatePath(cell, Ai, Aj, Bi, Bj, n, v, d, additionalPath);
-
     }
+
+    public static void generateCHValue(boolean matrix[][], int Ai, int Aj, int Bi, int Bj, int n, int v, int d, boolean additionalPath) {
+        for (int y = 0; y < matrix.length; y++) {
+            for (int x = 0; x < matrix.length; x++) {
+                cell[y][x] = new Node(y, x);
+                if (matrix[y][x]) {
+                    if(Math.abs(y - Bi)>Math.abs(x - Bj)){
+                        cell[y][x].hValue = Math.abs(y - Bi);
+                    }else{
+                        cell[y][x].hValue = Math.abs(x - Bj);
+                    }
+                } else {
+                    cell[y][x].hValue = -1;
+                }
+            }
+        }
+        generatePath(cell, Ai, Aj, Bi, Bj, n, v, d, additionalPath);
+    }
+
+    public static void generateEHValue(boolean matrix[][], int Ai, int Aj, int Bi, int Bj, int n, int v, int d, boolean additionalPath) {
+
+        for (int y = 0; y < matrix.length; y++) {
+            for (int x = 0; x < matrix.length; x++) {
+                cell[y][x] = new Node(y, x);
+                if (matrix[y][x]) {
+                    cell[y][x].hValue = Math.sqrt(Math.pow(y-Bi, 2) + Math.pow(x-Bj, 2));
+                } else {
+                    cell[y][x].hValue = -1;
+                }
+            }
+        }
+        generatePath(cell, Ai, Aj, Bi, Bj, n, v, d, additionalPath);
+    }
+
+
 
 
     public static void menu() {
@@ -122,7 +155,7 @@ public class PathFindingOnSquaredGrid {
             if (j == 0) {
                 timerFlow = new Stopwatch();
                 //Method to generate Chebyshev path. Both Horizontal and Diagonal pathways are possible.
-                generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, true);
+                generateCHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, true);
 
                 //Checks whether the end point has been reach (Stored in the pathList)
                 if(pathList.contains(cell[Bi][Bj])){
@@ -157,7 +190,7 @@ public class PathFindingOnSquaredGrid {
 
             if (j == 1) {
                 timerFlow = new Stopwatch();
-                generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 14, true);
+                generateEHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 14, true);
 
                 if(pathList.contains(cell[Bi][Bj])){
 
@@ -188,7 +221,7 @@ public class PathFindingOnSquaredGrid {
 
             if (j == 2) {
                 timerFlow = new Stopwatch();
-                generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, false);
+                generateMHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, false);
 
                 if(pathList.contains(cell[Bi][Bj])){
 
@@ -272,9 +305,9 @@ public class PathFindingOnSquaredGrid {
                 if (cell[node.x][node.y - 1].hValue != -1
                         && !openList.contains(cell[node.x][node.y - 1])
                         && !closedList.contains(cell[node.x][node.y - 1])) {
-                    int tCost = node.fValue + v;
+                    double tCost = node.fValue + v;
                     cell[node.x][node.y - 1].gValue=v;
-                    int cost = cell[node.x][node.y - 1].hValue + tCost;
+                    double cost = cell[node.x][node.y - 1].hValue + tCost;
                     if (cell[node.x][node.y - 1].fValue > cost || !openList.contains(cell[node.x][node.y - 1]))
                         cell[node.x][node.y - 1].fValue = cost;
 
@@ -289,9 +322,9 @@ public class PathFindingOnSquaredGrid {
                 if (cell[node.x][node.y + 1].hValue != -1
                         && !openList.contains(cell[node.x][node.y + 1])
                         && !closedList.contains(cell[node.x][node.y + 1])) {
-                    int tCost = node.fValue + v;
+                    double tCost = node.fValue + v;
                     cell[node.x][node.y + 1].gValue=v;
-                    int cost = cell[node.x][node.y + 1].hValue + tCost;
+                    double cost = cell[node.x][node.y + 1].hValue + tCost;
                     if (cell[node.x][node.y + 1].fValue > cost || !openList.contains(cell[node.x][node.y + 1]))
                         cell[node.x][node.y + 1].fValue = cost;
 
@@ -306,9 +339,9 @@ public class PathFindingOnSquaredGrid {
                 if (cell[node.x + 1][node.y].hValue != -1
                         && !openList.contains(cell[node.x + 1][node.y])
                         && !closedList.contains(cell[node.x + 1][node.y])) {
-                    int tCost = node.fValue + v;
+                    double tCost = node.fValue + v;
                     cell[node.x + 1][node.y].gValue=v;
-                    int cost = cell[node.x + 1][node.y].hValue + tCost;
+                    double cost = cell[node.x + 1][node.y].hValue + tCost;
                     if (cell[node.x + 1][node.y].fValue > cost || !openList.contains(cell[node.x + 1][node.y]))
                         cell[node.x + 1][node.y].fValue = cost;
 
@@ -323,9 +356,9 @@ public class PathFindingOnSquaredGrid {
                 if (cell[node.x - 1][node.y].hValue != -1
                         && !openList.contains(cell[node.x - 1][node.y])
                         && !closedList.contains(cell[node.x - 1][node.y])) {
-                    int tCost = node.fValue + v;
+                    double tCost = node.fValue + v;
                     cell[node.x - 1][node.y].gValue=v;
-                    int cost = cell[node.x - 1][node.y].hValue + tCost;
+                    double cost = cell[node.x - 1][node.y].hValue + tCost;
                     if (cell[node.x - 1][node.y].fValue > cost || !openList.contains(cell[node.x - 1][node.y]))
                         cell[node.x - 1][node.y].fValue = cost;
 
@@ -342,9 +375,9 @@ public class PathFindingOnSquaredGrid {
                     if (cell[node.x - 1][node.y - 1].hValue != -1
                             && !openList.contains(cell[node.x - 1][node.y - 1])
                             && !closedList.contains(cell[node.x - 1][node.y - 1])) {
-                        int tCost = node.fValue + d;
+                        double tCost = node.fValue + d;
                         cell[node.x - 1][node.y - 1].gValue=d;
-                        int cost = cell[node.x - 1][node.y - 1].hValue + tCost;
+                        double cost = cell[node.x - 1][node.y - 1].hValue + tCost;
                         if (cell[node.x - 1][node.y - 1].fValue > cost || !openList.contains(cell[node.x - 1][node.y - 1]))
                             cell[node.x - 1][node.y - 1].fValue = cost;
 
@@ -359,9 +392,9 @@ public class PathFindingOnSquaredGrid {
                     if (cell[node.x - 1][node.y + 1].hValue != -1
                             && !openList.contains(cell[node.x - 1][node.y + 1])
                             && !closedList.contains(cell[node.x - 1][node.y + 1])) {
-                        int tCost = node.fValue + d;
+                        double tCost = node.fValue + d;
                         cell[node.x - 1][node.y + 1].gValue=d;
-                        int cost = cell[node.x - 1][node.y + 1].hValue + tCost;
+                        double cost = cell[node.x - 1][node.y + 1].hValue + tCost;
                         if (cell[node.x - 1][node.y + 1].fValue > cost || !openList.contains(cell[node.x - 1][node.y + 1]))
                             cell[node.x - 1][node.y + 1].fValue = cost;
 
@@ -376,9 +409,9 @@ public class PathFindingOnSquaredGrid {
                     if (cell[node.x + 1][node.y - 1].hValue != -1
                             && !openList.contains(cell[node.x + 1][node.y - 1])
                             && !closedList.contains(cell[node.x + 1][node.y - 1])) {
-                        int tCost = node.fValue + d;
+                        double tCost = node.fValue + d;
                         cell[node.x + 1][node.y - 1].gValue=d;
-                        int cost = cell[node.x + 1][node.y - 1].hValue + tCost;
+                        double cost = cell[node.x + 1][node.y - 1].hValue + tCost;
                         if (cell[node.x + 1][node.y - 1].fValue > cost || !openList.contains(cell[node.x + 1][node.y - 1]))
                             cell[node.x + 1][node.y - 1].fValue = cost;
 
@@ -393,9 +426,9 @@ public class PathFindingOnSquaredGrid {
                     if (cell[node.x + 1][node.y + 1].hValue != -1
                             && !openList.contains(cell[node.x + 1][node.y + 1])
                             && !closedList.contains(cell[node.x + 1][node.y + 1])) {
-                        int tCost = node.fValue + d;
+                        double tCost = node.fValue + d;
                         cell[node.x + 1][node.y + 1].gValue=d;
-                        int cost = cell[node.x + 1][node.y + 1].hValue + tCost;
+                        double cost = cell[node.x + 1][node.y + 1].hValue + tCost;
                         if (cell[node.x + 1][node.y + 1].fValue > cost || !openList.contains(cell[node.x + 1][node.y + 1]))
                             cell[node.x + 1][node.y + 1].fValue = cost;
 

@@ -6,9 +6,9 @@ public class Node {
 
     int x;
     int y;
-    int hValue;
+    double hValue;
     int gValue;
-    int fValue;
+    double fValue;
     Node parent;
 
 
