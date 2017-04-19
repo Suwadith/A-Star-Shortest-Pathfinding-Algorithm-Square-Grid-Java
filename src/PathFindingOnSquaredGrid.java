@@ -141,7 +141,7 @@ public class PathFindingOnSquaredGrid {
                 StdDraw.setPenRadius(0.006);
 
                 //Draws the path
-                for (int i = 0; i < pathList.size(); i++) {
+                for (int i = 0; i < pathList.size()-1; i++) {
                     /*System.out.println(pathList.get(i).x + " " + pathList.get(i).y);*/
                     /*StdDraw.filledSquare(pathList.get(i).y, n - pathList.get(i).x - 1, .5);*/
                     StdDraw.line(pathList.get(i).y, n-1-pathList.get(i).x, pathList.get(i+1).y, n-1-pathList.get(i+1).x);
@@ -154,6 +154,8 @@ public class PathFindingOnSquaredGrid {
                 System.out.println("Total gCost: " + gCost);
                 System.out.println("Total fCost: " + fCost);
                 StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+                gCost=0;
+                fCost=0;
 
                 }else{
 
@@ -189,6 +191,8 @@ public class PathFindingOnSquaredGrid {
                     System.out.println("Total gCost: " + gCost);
                     System.out.println("Total fCost: " + fCost);
                     StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+                    gCost=0;
+                    fCost=0;
 
                 }else{
 
@@ -223,6 +227,8 @@ public class PathFindingOnSquaredGrid {
                     System.out.println("Total gCost: " + gCost);
                     System.out.println("Total fCost: " + fCost);
                     StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+                    gCost=0;
+                    fCost=0;
 
                 }else{
 
