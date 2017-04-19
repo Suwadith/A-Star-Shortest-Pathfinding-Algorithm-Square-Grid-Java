@@ -12,6 +12,7 @@ public class PathFindingOnSquaredGrid {
     static ArrayList<Node> pathList = new ArrayList<>();
     static ArrayList<Node> closedList = new ArrayList<>();
     static boolean additionalPath = false;
+    static int j=0;
 
     // draw the N-by-N boolean matrix to standard draw
     public static void show(boolean[][] a, boolean which) {
@@ -95,6 +96,15 @@ public class PathFindingOnSquaredGrid {
         generatePath(cell, Ai, Aj, Bi, Bj, n, v, d, additionalPath);
     }
 
+    public static void test() {
+        Scanner in = new Scanner(System.in);
+        System.out.println("Choose a path: ");
+        System.out.println("1. Chebyshev path");
+        System.out.println("2. Euclidean path");
+        System.out.println("3. Manhattan path");
+        j = in.nextInt();
+    }
+
     public static void menu() {
         Scanner in = new Scanner(System.in);
         System.out.println("Please choose N: ");
@@ -127,121 +137,130 @@ public class PathFindingOnSquaredGrid {
         Stopwatch timerFlow = null;
 
         //Loop to find all 3 pathways and their relative Final Cost values
-        for(int j=0; j<3; j++) {
+        /*for(int j=0; j<3; j++) {*/
 
-            if (j == 0) {
-                timerFlow = new Stopwatch();
-                //Method to generate Chebyshev path. Both Horizontal and Diagonal pathways are possible.
-                generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, true, 1);
+        test();
 
-                //Checks whether the end point has been reach (Stored in the pathList)
-                if(pathList.contains(cell[Bi][Bj])){
+        do {
+            switch (j) {
+                case 1:
+                    StdDraw.clear();
+                    show(randomlyGenMatrix, true, Ai, Aj, Bi, Bj);
+                    timerFlow = new Stopwatch();
+                    //Method to generate Chebyshev path. Both Horizontal and Diagonal pathways are possible.
+                    generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, true, 1);
 
-                StdDraw.setPenColor(Color.RED);
-                StdDraw.setPenRadius(0.006);
+                    //Checks whether the end point has been reach (Stored in the pathList)
+                    if (pathList.contains(cell[Bi][Bj])) {
+                        StdDraw.setPenColor(Color.RED);
+                        StdDraw.setPenRadius(0.006);
 
-                //Draws the path
-                for (int i = 0; i < pathList.size()-1; i++) {
+                        //Draws the path
+                        for (int i = 0; i < pathList.size() - 1; i++) {
                     /*System.out.println(pathList.get(i).x + " " + pathList.get(i).y);*/
                     /*StdDraw.filledSquare(pathList.get(i).y, n - pathList.get(i).x - 1, .5);*/
-                    StdDraw.line(pathList.get(i).y, n-1-pathList.get(i).x, pathList.get(i+1).y, n-1-pathList.get(i+1).x);
-                    //Adds the gValue of each and every Node object that's stored in the pathList
-                    gCost+=pathList.get(i).gValue;
-                    fCost+=pathList.get(i).fValue;
-                }
+                            StdDraw.line(pathList.get(i).y, n - 1 - pathList.get(i).x, pathList.get(i + 1).y, n - 1 - pathList.get(i + 1).x);
+                            //Adds the gValue of each and every Node object that's stored in the pathList
+                            gCost += pathList.get(i).gValue;
+                            fCost += pathList.get(i).fValue;
+                        }
 
-                System.out.println("Chebyshev Path Found");
-                System.out.println("Total gCost: " + gCost);
-                System.out.println("Total fCost: " + fCost);
-                StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
-                gCost=0;
-                fCost=0;
+                        System.out.println("Chebyshev Path Found");
+                        System.out.println("Total gCost: " + gCost);
+                        System.out.println("Total fCost: " + fCost);
+                        StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+                        gCost = 0;
+                        fCost = 0;
 
-                }else{
+                    } else {
 
-                    System.out.println("Chebyshev Path Not found");
-                    StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+                        System.out.println("Chebyshev Path Not found");
+                        StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
 
-                }
+                    }
 
-                //Clears Both the pathList and the closedList
-                pathList.clear();
-                closedList.clear();
+                    //Clears Both the pathList and the closedList
+                    pathList.clear();
+                    closedList.clear();
+                    test();
+                    break;
 
-            }
 
-            if (j == 1) {
-                timerFlow = new Stopwatch();
-                generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 14, true, 2);
+                case 2:
+                    StdDraw.clear();
+                    show(randomlyGenMatrix, true, Ai, Aj, Bi, Bj);
+                    timerFlow = new Stopwatch();
+                    generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 14, true, 2);
 
-                if(pathList.contains(cell[Bi][Bj])){
+                    if (pathList.contains(cell[Bi][Bj])) {
+                        StdDraw.setPenColor(Color.BLACK);
+                        StdDraw.setPenRadius(0.006);
 
-                StdDraw.setPenColor(Color.BLACK);
-                StdDraw.setPenRadius(0.006);
-
-                for (int i = 0; i < pathList.size()-1; i++) {
+                        for (int i = 0; i < pathList.size() - 1; i++) {
                    /* System.out.println(pathList.get(i).x + " " + pathList.get(i).y);*/
                     /*StdDraw.circle(pathList.get(i).y, n - pathList.get(i).x - 1, .4);*/
-                    StdDraw.line(pathList.get(i).y, n-1-pathList.get(i).x, pathList.get(i+1).y, n-1-pathList.get(i+1).x);
-                    gCost+=pathList.get(i).gValue;
-                    fCost+=pathList.get(i).fValue;
-                }
+                            StdDraw.line(pathList.get(i).y, n - 1 - pathList.get(i).x, pathList.get(i + 1).y, n - 1 - pathList.get(i + 1).x);
+                            gCost += pathList.get(i).gValue;
+                            fCost += pathList.get(i).fValue;
+                        }
 
-                    System.out.println("Euclidean Path Found");
-                    System.out.println("Total gCost: " + gCost);
-                    System.out.println("Total fCost: " + fCost);
-                    StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
-                    gCost=0;
-                    fCost=0;
+                        System.out.println("Euclidean Path Found");
+                        System.out.println("Total gCost: " + gCost);
+                        System.out.println("Total fCost: " + fCost);
+                        StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+                        gCost = 0;
+                        fCost = 0;
 
-                }else{
+                    } else {
 
-                    System.out.println("Euclidean Path Not found");
-                    StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+                        System.out.println("Euclidean Path Not found");
+                        StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
 
-                }
+                    }
 
-                pathList.clear();
-                closedList.clear();
+                    pathList.clear();
+                    closedList.clear();
+                    test();
+                    break;
 
-            }
+                case 3:
+                    StdDraw.clear();
+                    show(randomlyGenMatrix, true, Ai, Aj, Bi, Bj);
+                    timerFlow = new Stopwatch();
+                    generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, false, 3);
 
-            if (j == 2) {
-                timerFlow = new Stopwatch();
-                generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, false, 3);
+                    if (pathList.contains(cell[Bi][Bj])) {
+                        StdDraw.setPenColor(Color.orange);
+                        StdDraw.setPenRadius(0.006);
 
-                if(pathList.contains(cell[Bi][Bj])){
-
-                StdDraw.setPenColor(Color.orange);
-                StdDraw.setPenRadius(0.006);
-
-                for (int i = 0; i < pathList.size()-1; i++) {
+                        for (int i = 0; i < pathList.size() - 1; i++) {
                     /*System.out.println(pathList.get(i).x + " " + pathList.get(i).y);*/
                     /*StdDraw.filledCircle(pathList.get(i).y, n - pathList.get(i).x - 1, .2);*/
-                    StdDraw.line(pathList.get(i).y, n-1-pathList.get(i).x, pathList.get(i+1).y, n-1-pathList.get(i+1).x);
-                    gCost+=pathList.get(i).gValue;
-                    fCost+=pathList.get(i).fValue;
-                }
+                            StdDraw.line(pathList.get(i).y, n - 1 - pathList.get(i).x, pathList.get(i + 1).y, n - 1 - pathList.get(i + 1).x);
+                            gCost += pathList.get(i).gValue;
+                            fCost += pathList.get(i).fValue;
+                        }
 
-                    System.out.println("Manhattan Path Found");
-                    System.out.println("Total gCost: " + gCost);
-                    System.out.println("Total fCost: " + fCost);
-                    StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
-                    gCost=0;
-                    fCost=0;
+                        System.out.println("Manhattan Path Found");
+                        System.out.println("Total gCost: " + gCost);
+                        System.out.println("Total fCost: " + fCost);
+                        StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+                        gCost = 0;
+                        fCost = 0;
 
-                }else{
+                    } else {
 
-                    System.out.println("Manhattan Path Not found");
-                    StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+                        System.out.println("Manhattan Path Not found");
+                        StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
 
-                }
+                    }
 
-                pathList.clear();
-                closedList.clear();
-
+                    pathList.clear();
+                    closedList.clear();
+                    test();
+                    break;
             }
-        }
+        }while(j!=0);
 
     }
 
