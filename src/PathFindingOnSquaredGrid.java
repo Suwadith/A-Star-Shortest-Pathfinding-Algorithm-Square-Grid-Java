@@ -244,10 +244,10 @@ public class PathFindingOnSquaredGrid {
     /**
      *
      * @param hValue Node type 2D Array (Matrix)
-     * @param Ai Starting point's x value
-     * @param Aj Starting point's y value
-     * @param Bi Ending point's x value
-     * @param Bj Ending point's y value
+     * @param Ai Starting point's y value
+     * @param Aj Starting point's x value
+     * @param Bi Ending point's y value
+     * @param Bj Ending point's x value
      * @param n Length of one side of the matrix
      * @param v Cost between 2 cells located horizontally or vertically next to each other
      * @param d Cost between 2 cells located Diagonally next to each other
