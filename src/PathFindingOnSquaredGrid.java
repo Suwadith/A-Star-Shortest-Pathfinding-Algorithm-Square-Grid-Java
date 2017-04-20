@@ -241,7 +241,6 @@ public class PathFindingOnSquaredGrid {
 
         }
 
-
     /**
      *
      * @param hValue Node type 2D Array (Matrix)
