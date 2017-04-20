@@ -102,7 +102,7 @@ public class PathFindingOnSquaredGrid {
         System.out.println("Please choose Obstacle ratio: ");
         double p = in.nextDouble();
         int gCost = 0;
-        int fCost = 0;
+        /*int fCost = 0;*/
 
         //Generating a new Boolean Matrix according to the input values of n and p (Length, Percolation value)
         boolean[][] randomlyGenMatrix = random(n, p);
@@ -146,15 +146,15 @@ public class PathFindingOnSquaredGrid {
                     /*StdDraw.line(pathList.get(i).y, n - 1 - pathList.get(i).x, pathList.get(i + 1).y, n - 1 - pathList.get(i + 1).x);*/
                         //Adds the gValue of each and every Node object that's stored in the pathList
                         gCost += pathList.get(i).gValue;
-                        fCost += pathList.get(i).fValue;
+                        /*fCost += pathList.get(i).fValue;*/
                     }
 
                     System.out.println("Chebyshev Path Found");
-                    System.out.println("Total gCost: " + gCost);
-                    System.out.println("Total fCost: " + fCost);
+                    System.out.println("Total Cost: " + gCost/10.0);
+                    /*System.out.println("Total fCost: " + fCost);*/
                     StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
                     gCost = 0;
-                    fCost = 0;
+                    /*fCost = 0;*/
 
                 } else {
 
@@ -182,15 +182,15 @@ public class PathFindingOnSquaredGrid {
                     /*StdDraw.circle(pathList.get(i).y, n - pathList.get(i).x - 1, .4);*/
                         StdDraw.line(pathList.get(i).y, n - 1 - pathList.get(i).x, pathList.get(i + 1).y, n - 1 - pathList.get(i + 1).x);
                         gCost += pathList.get(i).gValue;
-                        fCost += pathList.get(i).fValue;
+                        /*fCost += pathList.get(i).fValue;*/
                     }
 
                     System.out.println("Euclidean Path Found");
-                    System.out.println("Total gCost: " + gCost);
-                    System.out.println("Total fCost: " + fCost);
+                    System.out.println("Total Cost: " + gCost/10.0);
+                    /*System.out.println("Total fCost: " + fCost);*/
                     StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
                     gCost = 0;
-                    fCost = 0;
+                    /*fCost = 0;*/
 
                 } else {
 
@@ -216,15 +216,15 @@ public class PathFindingOnSquaredGrid {
                     /*StdDraw.filledCircle(pathList.get(i).y, n - pathList.get(i).x - 1, .2);*/
                         StdDraw.line(pathList.get(i).y, n - 1 - pathList.get(i).x, pathList.get(i + 1).y, n - 1 - pathList.get(i + 1).x);
                         gCost += pathList.get(i).gValue;
-                        fCost += pathList.get(i).fValue;
+                        /*fCost += pathList.get(i).fValue;*/
                     }
 
                     System.out.println("Manhattan Path Found");
-                    System.out.println("Total gCost: " + gCost);
-                    System.out.println("Total fCost: " + fCost);
+                    System.out.println("Total Cost: " + gCost/10.0);
+                    /*System.out.println("Total fCost: " + fCost);*/
                     StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
                     gCost = 0;
-                    fCost = 0;
+                    /*fCost = 0;*/
 
                 } else {
 
