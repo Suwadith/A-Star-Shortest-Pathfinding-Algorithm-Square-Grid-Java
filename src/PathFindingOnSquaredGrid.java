@@ -52,17 +52,16 @@ public class PathFindingOnSquaredGrid {
     }
 
     /**
-     *
-     * @param matrix The boolean matrix that the framework generates
-     * @param Ai Starting point's x value
-     * @param Aj Starting point's y value
-     * @param Bi Ending point's x value
-     * @param Bj Ending point's y value
-     * @param n Length of one side of the matrix
-     * @param v Cost between 2 cells located horizontally or vertically next to each other
-     * @param d Cost between 2 cells located Diagonally next to each other
+     * @param matrix         The boolean matrix that the framework generates
+     * @param Ai             Starting point's x value
+     * @param Aj             Starting point's y value
+     * @param Bi             Ending point's x value
+     * @param Bj             Ending point's y value
+     * @param n              Length of one side of the matrix
+     * @param v              Cost between 2 cells located horizontally or vertically next to each other
+     * @param d              Cost between 2 cells located Diagonally next to each other
      * @param additionalPath Boolean to decide whether to calculate the cost of through the diagonal path
-     * @param h int value which decides the correct method to choose to calculate the Heuristic value
+     * @param h              int value which decides the correct method to choose to calculate the Heuristic value
      */
     public static void generateHValue(boolean matrix[][], int Ai, int Aj, int Bi, int Bj, int n, int v, int d, boolean additionalPath, int h) {
 
@@ -72,17 +71,17 @@ public class PathFindingOnSquaredGrid {
                 cell[y][x] = new Node(y, x);
                 //Checks whether a cell is Blocked or Not by checking the boolean value
                 if (matrix[y][x]) {
-                    if(h==1) {
+                    if (h == 1) {
                         //Assigning the Chebyshev Heuristic value
-                        if(Math.abs(y - Bi)>Math.abs(x - Bj)){
+                        if (Math.abs(y - Bi) > Math.abs(x - Bj)) {
                             cell[y][x].hValue = Math.abs(y - Bi);
-                        }else{
+                        } else {
                             cell[y][x].hValue = Math.abs(x - Bj);
                         }
-                    }else if(h==2){
+                    } else if (h == 2) {
                         //Assigning the Euclidean Heuristic value
-                        cell[y][x].hValue = Math.sqrt(Math.pow(y-Bi, 2) + Math.pow(x-Bj, 2));
-                    }else if(h==3){
+                        cell[y][x].hValue = Math.sqrt(Math.pow(y - Bi, 2) + Math.pow(x - Bj, 2));
+                    } else if (h == 3) {
                         //Assigning the Manhattan Heuristic value by calculating the absolute length (x+y) from the ending point to the starting point
                         cell[y][x].hValue = Math.abs(y - Bi) + Math.abs(x - Bj);
                     }
@@ -108,7 +107,7 @@ public class PathFindingOnSquaredGrid {
         //Generating a new Boolean Matrix according to the input values of n and p (Length, Percolation value)
         boolean[][] randomlyGenMatrix = random(n, p);
 
-//        StdArrayIO.print(randomlyGenMatrix);
+        //StdArrayIO.print(randomlyGenMatrix);
         show(randomlyGenMatrix, true);
 
         //Creation of a Node type 2D array
@@ -128,129 +127,128 @@ public class PathFindingOnSquaredGrid {
         Stopwatch timerFlow = null;
 
         //Loop to find all 3 pathways and their relative Final Cost values
-        for(int j=0; j<3; j++) {
+        for (int j = 0; j < 3; j++) {
 
-        if(j==0) {
-            timerFlow = new Stopwatch();
-            //Method to generate Chebyshev path. Both Horizontal and Diagonal pathways are possible.
-            generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, true, 1);
+            if (j == 0) {
+                timerFlow = new Stopwatch();
+                //Method to generate Chebyshev path. Both Horizontal and Diagonal pathways are possible.
+                generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, true, 1);
 
-            //Checks whether the end point has been reach (Stored in the pathList)
-            if (pathList.contains(cell[Bi][Bj])) {
-                StdDraw.setPenColor(Color.RED);
+                //Checks whether the end point has been reach (Stored in the pathList)
+                if (pathList.contains(cell[Bi][Bj])) {
+                    StdDraw.setPenColor(Color.RED);
                 /*StdDraw.setPenRadius(0.006);*/
 
-                //Draws the path
-                for (int i = 0; i < pathList.size(); i++) {
+                    //Draws the path
+                    for (int i = 0; i < pathList.size(); i++) {
                     /*System.out.println(pathList.get(i).x + " " + pathList.get(i).y);*/
-                    StdDraw.filledSquare(pathList.get(i).y, n - pathList.get(i).x - 1, .5);
+                        StdDraw.filledSquare(pathList.get(i).y, n - pathList.get(i).x - 1, .5);
                     /*StdDraw.line(pathList.get(i).y, n - 1 - pathList.get(i).x, pathList.get(i + 1).y, n - 1 - pathList.get(i + 1).x);*/
-                    //Adds the gValue of each and every Node object that's stored in the pathList
-                    gCost += pathList.get(i).gValue;
-                    fCost += pathList.get(i).fValue;
-                }
-
-                System.out.println("Chebyshev Path Found");
-                System.out.println("Total gCost: " + gCost);
-                System.out.println("Total fCost: " + fCost);
-                StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
-                gCost = 0;
-                fCost = 0;
-
-            } else {
-
-                System.out.println("Chebyshev Path Not found");
-                StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
-
-            }
-
-            //Clears Both the pathList and the closedList
-            pathList.clear();
-            closedList.clear();
-        }
-
-
-               if(j==1) {
-                   timerFlow = new Stopwatch();
-                   generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 14, true, 2);
-
-                   if (pathList.contains(cell[Bi][Bj])) {
-                       StdDraw.setPenColor(Color.BLACK);
-                       StdDraw.setPenRadius(0.01);
-
-                       for (int i = 0; i < pathList.size() - 1; i++) {
-                   /* System.out.println(pathList.get(i).x + " " + pathList.get(i).y);*/
-                    /*StdDraw.circle(pathList.get(i).y, n - pathList.get(i).x - 1, .4);*/
-                           StdDraw.line(pathList.get(i).y, n - 1 - pathList.get(i).x, pathList.get(i + 1).y, n - 1 - pathList.get(i + 1).x);
-                           gCost += pathList.get(i).gValue;
-                           fCost += pathList.get(i).fValue;
-                       }
-
-                       System.out.println("Euclidean Path Found");
-                       System.out.println("Total gCost: " + gCost);
-                       System.out.println("Total fCost: " + fCost);
-                       StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
-                       gCost = 0;
-                       fCost = 0;
-
-                   } else {
-
-                       System.out.println("Euclidean Path Not found");
-                       StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
-
-                   }
-
-                   pathList.clear();
-                   closedList.clear();
-               }
-
-                if(j==2) {
-                    timerFlow = new Stopwatch();
-                    generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, false, 3);
-
-                    if (pathList.contains(cell[Bi][Bj])) {
-                        StdDraw.setPenColor(Color.orange);
-                        StdDraw.setPenRadius(0.006);
-
-                        for (int i = 0; i < pathList.size() - 1; i++) {
-                    /*System.out.println(pathList.get(i).x + " " + pathList.get(i).y);*/
-                    /*StdDraw.filledCircle(pathList.get(i).y, n - pathList.get(i).x - 1, .2);*/
-                            StdDraw.line(pathList.get(i).y, n - 1 - pathList.get(i).x, pathList.get(i + 1).y, n - 1 - pathList.get(i + 1).x);
-                            gCost += pathList.get(i).gValue;
-                            fCost += pathList.get(i).fValue;
-                        }
-
-                        System.out.println("Manhattan Path Found");
-                        System.out.println("Total gCost: " + gCost);
-                        System.out.println("Total fCost: " + fCost);
-                        StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
-                        gCost = 0;
-                        fCost = 0;
-
-                    } else {
-
-                        System.out.println("Manhattan Path Not found");
-                        StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
-
+                        //Adds the gValue of each and every Node object that's stored in the pathList
+                        gCost += pathList.get(i).gValue;
+                        fCost += pathList.get(i).fValue;
                     }
 
-                    pathList.clear();
-                    closedList.clear();
+                    System.out.println("Chebyshev Path Found");
+                    System.out.println("Total gCost: " + gCost);
+                    System.out.println("Total fCost: " + fCost);
+                    StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+                    gCost = 0;
+                    fCost = 0;
+
+                } else {
+
+                    System.out.println("Chebyshev Path Not found");
+                    StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+
                 }
+
+                //Clears Both the pathList and the closedList
+                pathList.clear();
+                closedList.clear();
             }
 
+
+            if (j == 1) {
+                timerFlow = new Stopwatch();
+                generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 14, true, 2);
+
+                if (pathList.contains(cell[Bi][Bj])) {
+                    StdDraw.setPenColor(Color.BLACK);
+                    StdDraw.setPenRadius(0.01);
+
+                    for (int i = 0; i < pathList.size() - 1; i++) {
+                   /* System.out.println(pathList.get(i).x + " " + pathList.get(i).y);*/
+                    /*StdDraw.circle(pathList.get(i).y, n - pathList.get(i).x - 1, .4);*/
+                        StdDraw.line(pathList.get(i).y, n - 1 - pathList.get(i).x, pathList.get(i + 1).y, n - 1 - pathList.get(i + 1).x);
+                        gCost += pathList.get(i).gValue;
+                        fCost += pathList.get(i).fValue;
+                    }
+
+                    System.out.println("Euclidean Path Found");
+                    System.out.println("Total gCost: " + gCost);
+                    System.out.println("Total fCost: " + fCost);
+                    StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+                    gCost = 0;
+                    fCost = 0;
+
+                } else {
+
+                    System.out.println("Euclidean Path Not found");
+                    StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+
+                }
+
+                pathList.clear();
+                closedList.clear();
+            }
+
+            if (j == 2) {
+                timerFlow = new Stopwatch();
+                generateHValue(randomlyGenMatrix, Ai, Aj, Bi, Bj, n, 10, 10, false, 3);
+
+                if (pathList.contains(cell[Bi][Bj])) {
+                    StdDraw.setPenColor(Color.orange);
+                    StdDraw.setPenRadius(0.006);
+
+                    for (int i = 0; i < pathList.size() - 1; i++) {
+                    /*System.out.println(pathList.get(i).x + " " + pathList.get(i).y);*/
+                    /*StdDraw.filledCircle(pathList.get(i).y, n - pathList.get(i).x - 1, .2);*/
+                        StdDraw.line(pathList.get(i).y, n - 1 - pathList.get(i).x, pathList.get(i + 1).y, n - 1 - pathList.get(i + 1).x);
+                        gCost += pathList.get(i).gValue;
+                        fCost += pathList.get(i).fValue;
+                    }
+
+                    System.out.println("Manhattan Path Found");
+                    System.out.println("Total gCost: " + gCost);
+                    System.out.println("Total fCost: " + fCost);
+                    StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+                    gCost = 0;
+                    fCost = 0;
+
+                } else {
+
+                    System.out.println("Manhattan Path Not found");
+                    StdOut.println("Elapsed time = " + timerFlow.elapsedTime());
+
+                }
+
+                pathList.clear();
+                closedList.clear();
+            }
         }
 
+    }
+
     /**
-     *
-     * @param hValue Node type 2D Array (Matrix)
-     * @param Ai Starting point's y value
-     * @param Aj Starting point's x value
-     * @param Bi Ending point's y value
-     * @param Bj Ending point's x value
-     * @param n Length of one side of the matrix
-     * @param v Cost between 2 cells located horizontally or vertically next to each other
-     * @param d Cost between 2 cells located Diagonally next to each other
+     * @param hValue         Node type 2D Array (Matrix)
+     * @param Ai             Starting point's y value
+     * @param Aj             Starting point's x value
+     * @param Bi             Ending point's y value
+     * @param Bj             Ending point's x value
+     * @param n              Length of one side of the matrix
+     * @param v              Cost between 2 cells located horizontally or vertically next to each other
+     * @param d              Cost between 2 cells located Diagonally next to each other
      * @param additionalPath Boolean to decide whether to calculate the cost of through the diagonal path
      */
     public static void generatePath(Node hValue[][], int Ai, int Aj, int Bi, int Bj, int n, int v, int d, boolean additionalPath) {
@@ -294,7 +292,7 @@ public class PathFindingOnSquaredGrid {
                         && !openList.contains(cell[node.x][node.y - 1])
                         && !closedList.contains(cell[node.x][node.y - 1])) {
                     double tCost = node.fValue + v;
-                    cell[node.x][node.y - 1].gValue=v;
+                    cell[node.x][node.y - 1].gValue = v;
                     double cost = cell[node.x][node.y - 1].hValue + tCost;
                     if (cell[node.x][node.y - 1].fValue > cost || !openList.contains(cell[node.x][node.y - 1]))
                         cell[node.x][node.y - 1].fValue = cost;
@@ -311,7 +309,7 @@ public class PathFindingOnSquaredGrid {
                         && !openList.contains(cell[node.x][node.y + 1])
                         && !closedList.contains(cell[node.x][node.y + 1])) {
                     double tCost = node.fValue + v;
-                    cell[node.x][node.y + 1].gValue=v;
+                    cell[node.x][node.y + 1].gValue = v;
                     double cost = cell[node.x][node.y + 1].hValue + tCost;
                     if (cell[node.x][node.y + 1].fValue > cost || !openList.contains(cell[node.x][node.y + 1]))
                         cell[node.x][node.y + 1].fValue = cost;
@@ -328,7 +326,7 @@ public class PathFindingOnSquaredGrid {
                         && !openList.contains(cell[node.x + 1][node.y])
                         && !closedList.contains(cell[node.x + 1][node.y])) {
                     double tCost = node.fValue + v;
-                    cell[node.x + 1][node.y].gValue=v;
+                    cell[node.x + 1][node.y].gValue = v;
                     double cost = cell[node.x + 1][node.y].hValue + tCost;
                     if (cell[node.x + 1][node.y].fValue > cost || !openList.contains(cell[node.x + 1][node.y]))
                         cell[node.x + 1][node.y].fValue = cost;
@@ -345,7 +343,7 @@ public class PathFindingOnSquaredGrid {
                         && !openList.contains(cell[node.x - 1][node.y])
                         && !closedList.contains(cell[node.x - 1][node.y])) {
                     double tCost = node.fValue + v;
-                    cell[node.x - 1][node.y].gValue=v;
+                    cell[node.x - 1][node.y].gValue = v;
                     double cost = cell[node.x - 1][node.y].hValue + tCost;
                     if (cell[node.x - 1][node.y].fValue > cost || !openList.contains(cell[node.x - 1][node.y]))
                         cell[node.x - 1][node.y].fValue = cost;
@@ -364,7 +362,7 @@ public class PathFindingOnSquaredGrid {
                             && !openList.contains(cell[node.x - 1][node.y - 1])
                             && !closedList.contains(cell[node.x - 1][node.y - 1])) {
                         double tCost = node.fValue + d;
-                        cell[node.x - 1][node.y - 1].gValue=d;
+                        cell[node.x - 1][node.y - 1].gValue = d;
                         double cost = cell[node.x - 1][node.y - 1].hValue + tCost;
                         if (cell[node.x - 1][node.y - 1].fValue > cost || !openList.contains(cell[node.x - 1][node.y - 1]))
                             cell[node.x - 1][node.y - 1].fValue = cost;
@@ -381,7 +379,7 @@ public class PathFindingOnSquaredGrid {
                             && !openList.contains(cell[node.x - 1][node.y + 1])
                             && !closedList.contains(cell[node.x - 1][node.y + 1])) {
                         double tCost = node.fValue + d;
-                        cell[node.x - 1][node.y + 1].gValue=d;
+                        cell[node.x - 1][node.y + 1].gValue = d;
                         double cost = cell[node.x - 1][node.y + 1].hValue + tCost;
                         if (cell[node.x - 1][node.y + 1].fValue > cost || !openList.contains(cell[node.x - 1][node.y + 1]))
                             cell[node.x - 1][node.y + 1].fValue = cost;
@@ -398,7 +396,7 @@ public class PathFindingOnSquaredGrid {
                             && !openList.contains(cell[node.x + 1][node.y - 1])
                             && !closedList.contains(cell[node.x + 1][node.y - 1])) {
                         double tCost = node.fValue + d;
-                        cell[node.x + 1][node.y - 1].gValue=d;
+                        cell[node.x + 1][node.y - 1].gValue = d;
                         double cost = cell[node.x + 1][node.y - 1].hValue + tCost;
                         if (cell[node.x + 1][node.y - 1].fValue > cost || !openList.contains(cell[node.x + 1][node.y - 1]))
                             cell[node.x + 1][node.y - 1].fValue = cost;
@@ -415,7 +413,7 @@ public class PathFindingOnSquaredGrid {
                             && !openList.contains(cell[node.x + 1][node.y + 1])
                             && !closedList.contains(cell[node.x + 1][node.y + 1])) {
                         double tCost = node.fValue + d;
-                        cell[node.x + 1][node.y + 1].gValue=d;
+                        cell[node.x + 1][node.y + 1].gValue = d;
                         double cost = cell[node.x + 1][node.y + 1].hValue + tCost;
                         if (cell[node.x + 1][node.y + 1].fValue > cost || !openList.contains(cell[node.x + 1][node.y + 1]))
                             cell[node.x + 1][node.y + 1].fValue = cost;
@@ -446,7 +444,7 @@ public class PathFindingOnSquaredGrid {
             endNode = endNode.parent;
         }
 
-        pathList.add(cell[Ai] [Aj]);
+        pathList.add(cell[Ai][Aj]);
         //Clears the openList
         openList.clear();
 
