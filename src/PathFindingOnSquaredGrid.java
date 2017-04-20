@@ -175,7 +175,7 @@ public class PathFindingOnSquaredGrid {
 
                 if (pathList.contains(cell[Bi][Bj])) {
                     StdDraw.setPenColor(Color.BLACK);
-                    StdDraw.setPenRadius(0.01);
+                    StdDraw.setPenRadius(0.015);
 
                     for (int i = 0; i < pathList.size() - 1; i++) {
                    /* System.out.println(pathList.get(i).x + " " + pathList.get(i).y);*/
