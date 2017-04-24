@@ -24,9 +24,9 @@ Java based solution to find the shortest path between 2 Grid Cells. [A* Shortest
 
 **Grid Size: 20x20, Percolation Ratio: 0.8**
 
-<img src="http://i.imgur.com/tJH5BUp.png" width="350">
+<img src="http://i.imgur.com/TK91JQ9.png" width="350">
 
 **Grid Size: 20x20, Percolation Ratio: 0.6**
 
-<img src="http://i.imgur.com/TK91JQ9.png" width="350">
+<img src="http://i.imgur.com/tJH5BUp.png" width="350">
 
