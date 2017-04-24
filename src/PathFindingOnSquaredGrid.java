@@ -97,7 +97,7 @@ public class PathFindingOnSquaredGrid {
 
     public static void menu() {
         Scanner in = new Scanner(System.in);
-        System.out.println("Please choose N: ");
+        System.out.println("Please choose N(Grid Size): ");
         int n = in.nextInt();
         System.out.println("Please choose Obstacle ratio: ");
         double p = in.nextDouble();
