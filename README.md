@@ -1,24 +1,24 @@
 # A-Star-Shortest-Pathfinding-Algorithm-Square-Grid-Java
 
-Java based solution to find the shortest path between 2 Grid Cells. [A* Shortest Pathfinding Algorithm]
+Java based solution to find the shortest path's distance between 2 Grid Cells. [A* Shortest Pathfinding Algorithm]
 
 ### Paths and Values
-- Manhattan Path - Can only Travel in Vertical directions (Vertical gCost = 1)
-- Chebyshev Path - Can Travel in both Diagonal and Vertical directions (Vertical gCost = 1, Diagonal gCost = 1)
-- Euclidean Path - Can Travel in both Diagonal and Vertical directions (Vertical gCost = 1, Diagonal gCost = 1.4)
+- Manhattan Path - Travels in vertical/horizontal directions (Vertical/Horizontal gCost = 1)
+- Chebyshev Path - Travels in both diagonal and vertical/horizontal directions (Vertical/Horizontal gCost = 1, Diagonal gCost = 1)
+- Euclidean Path - Travels in both diagonal and vertical/horizontal directions (Vertical/Horizontal gCost = 1, Diagonal gCost = 1.4)
 
 ### Input
-- Grid Size (NxN) => E.g: 20
-- Percolation Ratio (0-1) => E.g: 0.8
-- x, y  coordinates of the starting Cell => E.g: 0, 0
-- x, y  coordinates of the ending Cell => E.g: 0, 0
+- Grid size (NxN) => E.g: 20
+- Percolation ratio (0-1) => E.g: 0.8
+- x, y  coordinates of the starting cell => E.g: 0, 0
+- x, y  coordinates of the ending cell => E.g: 0, 0
 
 ### Output
 - Total path gCost 
-- Time to took to calculate the shortest path
-- Manhattan Path - Yellow Line
-- Chebyshev Path - Red Color Filled Squares
-- Euclidean Path - Black Line
+- Time taken to calculate the shortest path
+- Manhattan Path - Yellow line
+- Chebyshev Path - Squares filled in red color
+- Euclidean Path - Black line
 
 ## Screenshots
 
