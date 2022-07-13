@@ -14,7 +14,7 @@ Euclidean Path - Travels in both diagonal and vertical/horizontal directions (Ve
 Grid size (NxN) => E.g: 20
 Percolation ratio (0-1) => E.g: 0.8
 x, y  coordinates of the starting cell => E.g: 0, 0
-x, y  coordinates of the ending cell => E.g: 0, 0
+x, y  coordinates of the ending cell => E.g: 19, 19
 ```
 
 ### Output
